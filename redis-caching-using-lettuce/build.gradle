@@ -1,0 +1,42 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        maven { url 'https://pi-artifactory.lmig.com/artifactory/maven' }
+        maven { url 'https://repo.forge.lmig.com/content/repositories/piit-releases/' }
+        maven { url "https://repo.forge.lmig.com/content/groups/ets" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.5.RELEASE")
+    }
+}
+
+plugins {
+    id 'java'
+    id 'application'
+}
+
+apply plugin: 'org.springframework.boot'
+
+
+repositories {
+    mavenLocal()
+    maven { url 'https://pi-artifactory.lmig.com/artifactory/maven' }
+    maven { url 'https://repo.forge.lmig.com/content/repositories/piit-releases/' }
+    maven { url "https://repo.forge.lmig.com/content/groups/ets" }
+    // flatDir { dirs 'src/main/resources/libs' }
+}
+
+mainClassName = "poc.App"
+
+bootJar {
+	mainClassName = 'poc.App'
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web:2.0.5.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-cache:2.0.5.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-data-redis:2.0.5.RELEASE")
+    compile("pagro:reference-data-load-client:0.2.0-rc.11")
+    //implementation name: 'ReferenceDataLoad'
+}
+

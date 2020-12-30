@@ -1,0 +1,31 @@
+# Redis Config
+spring:
+ cache:
+   type: redis
+ redis:
+   host: localhost
+   port: 6379
+   timeout: 1000
+
+# redis:
+#   host: localhost
+#   port: 6379
+#   jedis:
+#     pool:
+#       max-total: 16
+#       max-idle: 8
+#       min-idle: 4
+#       maxWaitMillis: 1000
+ws:
+  configs:
+    ###########################
+    # Reference Data Service URL
+    ###########################
+    ReferenceDataLoad:
+      endpoint: http://dev-a-utility-dataservices.libertyec.com/PIUtilityServices/ReferenceDataLoad
+
+trust:
+  store:
+    certificate:
+    # dev-a-utility-dataserviceslibertyeccom.crt
+    - "-----BEGIN CERTIFICATE-----\nMIIDXzCCAsgCAisRMA0GCSqGSIb3DQEBCwUAMIGXMQswCQYDVQQGEwJVUzEWMBQG\nA1UECBMNTmV3IEhhbXBzaGlyZTETMBEGA1UEBxMKUG9ydHNtb3V0aDEdMBsGA1UE\nChMUTGliZXJ0eSBNdXR1YWwgR3JvdXAxHTAbBgNVBAsTFExpYmVydHkgTXV0dWFs\nIEdyb3VwMR0wGwYDVQQDExRMaWJlcnR5IE11dHVhbCBHcm91cDAeFw0xNTExMTgx\nNDMyNDVaFw0yNTExMTUxNDMyNDVaMIHSMQswCQYDVQQGEwJVUzEWMBQGA1UECAwN\nTmV3IEhhbXBzaGlyZTETMBEGA1UEBwwKUG9ydHNtb3V0aDEdMBsGA1UECgwUTGli\nZXJ0eSBNdXR1YWwgR3JvdXAxGzAZBgNVBAsMElBlcnNvbmFsIEluc3VyYW5jZTEx\nMC8GA1UEAwwoZGV2LWEtdXRpbGl0eS1kYXRhc2VydmljZXMubGliZXJ0eWVjLmNv\nbTEnMCUGCSqGSIb3DQEJARYYdjJrdG1zQGxpYmVydHltdXR1YWwuY29tMIIBIjAN\nBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwcRe6uP3+4dudy/uV8t4dTJWUzLx\nB3CqgpyMtaKFQAXc8d6c5NV+qvZ4nxN+EByMmQxE4m+hhJoO4Be2YWtcqGFeLzek\nOruiYgOX/olg9MXN0cTKd4wbpyw5AknnbYt/e4lSCF7VCIIPMJ/a8tgJL6C9cFbS\nNVtnD79Ks2ba3cZSOdvr9ZKin4EAvmy91AfKnjAtfqwgsYC9l8MhSQ0NdDIBFjuu\nIeMVJEajlwPCp9e0c1lErWmTyDlZDLuNKPFc4rl7RxEGXSSvPC+dA4YK1cdMVJb4\nClGjq+UScY98vx0T2o0Lsps4dG35L80G83/U5KKvg8rPncGu42HN9Ii/9QIDAQAB\nMA0GCSqGSIb3DQEBCwUAA4GBAK/90yRS/nK35GqoSzKTdMOVmFrSAkQoaJ/+x0FR\nKp341/46YiB8vxBe2k5VBCvjwDuQiE1bEWt/AF1WA/DN0gfcKfjx29NoU/E9GiWl\n8BEfl2o3wD/oX9/ajZMchHezpRsWn+9N+29RXfwNT5HwCpKd2cYJwfANqOLbGyjb\njCz1\n-----END CERTIFICATE-----\n"      
