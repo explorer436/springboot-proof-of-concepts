@@ -13,3 +13,5 @@ Eureka - service registration and discovery
 https://github.com/in28minutes/pcf-crash-course-with-spring-boot
 
 https://github.com/in28minutes/spring-microservices-v2
+
+Spring with Akka - actor and service models
