@@ -17,4 +17,5 @@ https://github.com/in28minutes/spring-microservices-v2
 Spring with Akka - actor and service models
 
 https://en.wikipedia.org/wiki/OpenResty
+
 https://www.theregister.com/2016/09/20/wtf_is_openresty_the_worlds_fifthmostused_web_server_thats_what/
