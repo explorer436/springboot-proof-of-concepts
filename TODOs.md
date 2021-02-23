@@ -1,3 +1,5 @@
+kafka - zookeeper
+
 https://spring.io/guides/gs/rest-hateoas/
 
 sending email from a springboot application
