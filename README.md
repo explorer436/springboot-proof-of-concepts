@@ -1,3 +1,5 @@
+TODO list:
+
 kafka - zookeeper
 
 https://spring.io/guides/gs/rest-hateoas/
