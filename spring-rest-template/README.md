@@ -1,1 +1,1 @@
-An example showing how to consume a RESTful service using Spring RestTemplate.
+An example showing how to consume a simple GET endpoint of a RESTful service using Spring RestTemplate.
