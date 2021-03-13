@@ -27,3 +27,5 @@ https://www.theregister.com/2016/09/20/wtf_is_openresty_the_worlds_fifthmostused
 Scaling a docker service in AWS ECS.
 
 https://spring.io/guides/gs/spring-boot-docker/
+
+Concurrency and parallelism - what are the differences? Need to do more research about this.
