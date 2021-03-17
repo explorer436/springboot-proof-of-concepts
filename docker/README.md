@@ -57,3 +57,4 @@ To display the processes running in a container: `docker top containerId`
 
 To display a live stream of container(s) resource usage statistics: `docker stats`
 
+When there is "not enough space" error from Docker: docker system prune -a
