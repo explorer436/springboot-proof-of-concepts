@@ -29,3 +29,7 @@ Scaling a docker service in AWS ECS.
 https://spring.io/guides/gs/spring-boot-docker/
 
 Concurrency and parallelism - what are the differences? Need to do more research about this.
+
+nginx
+
+wiremock
