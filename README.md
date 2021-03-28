@@ -7,8 +7,13 @@ https://spring.io/guides/gs/rest-hateoas/
 sending email from a springboot application
 
 single sign-on with spring security OAuth 2
+spring-security-oauth
 
 springboot Apache Kafka messaging
+spring-cloud-stream
+spring-cloud-stream-binder-kafka
+
+spring-session
 
 Spring Expression Language
 
@@ -33,3 +38,26 @@ Concurrency and parallelism - what are the differences? Need to do more research
 nginx
 
 wiremock
+
+asciidoctor
+spring-restdocs
+spring-restdocs-asciidoctor
+
+spring-auto-restdocs-json-doclet
+gradle jsonDoclet task
+
+org.json:json
+org.webjars:json-stringify
+
+spring-data-redis
+
+snakeyaml
+
+semver
+
+groovy springboot integration
+
+dealing with JSON inside a springboot application
+
+springfox-swagger2
+springfox-swagger-ui
