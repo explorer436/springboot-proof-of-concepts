@@ -61,3 +61,5 @@ dealing with JSON inside a springboot application
 
 springfox-swagger2
 springfox-swagger-ui
+
+MapStruct and JMapper java bean mappings
