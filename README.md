@@ -63,3 +63,9 @@ springfox-swagger2
 springfox-swagger-ui
 
 MapStruct and JMapper java bean mappings
+
+chef server and chef environment
+
+Do a POC using lua language
+
+mocha test framework
