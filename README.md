@@ -93,3 +93,15 @@ XML to json
 - if we are working with a SOAP service, the object that the service is going to get will be in XML format.
 - if we need to invoke RESTful services in the backend, how to transform the data and invoke the backend services?
 ------------------
+Learn how to do these in Haskell:
+- decode jwt; extract information (fields, etc.) out of it
+- validate jwt against a custom key file
+- inject values for fields based on environment
+- inject secrets like database userids, passwords
+- oauth server and client applications
+- how to build a docker image and deploy it in cloud environments
+- sql and no sql database connectivity applications
+- change logging levels based on environment
+- Go throught the list of features offered by spring framework and learn how to implement the solutions in Haskell
+- xml to json and json to xml
+------------------
