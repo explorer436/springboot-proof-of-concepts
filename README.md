@@ -53,8 +53,6 @@ spring-data-redis
 
 snakeyaml
 
-semver
-
 groovy springboot integration
 
 dealing with JSON inside a springboot application
@@ -69,3 +67,29 @@ chef server and chef environment
 Do a POC using lua language
 
 mocha test framework
+
+
+------------------
+Implement circuit breaker pattern
+- in Java
+- in Haskell
+Using a counter in local cache
+- keep track of the http responses from the backend services; if the http status is 500 or 503 or 5XX, increment a counter in local cache; if the counter reaches 5 (or any arbitrary value, open the circuit breaker)
+- wait for a given time period (again, another arbitrary value and close the circuit breaker)
+------------------
+implement local cache using Haskell
+- maintaining key-value pairs
+- maintaining multiple cache stores in a single cache instance (e.g. one for data from a backend service, one for a custom counter, one for something else, etc.)
+------------------
+Thread safe operations in Haskell
+- If we have to increment a counter value is cache and also retrieve it for very fast transactions, how to make sure that it will be thread safe?
+------------------
+Generate swagger documentation
+- In Haskell for an API
+https://www.youtube.com/watch?v=rK5vykk1tbo
+------------------
+XML to json
+- And vice versa in Haskell
+- if we are working with a SOAP service, the object that the service is going to get will be in XML format.
+- if we need to invoke RESTful services in the backend, how to transform the data and invoke the backend services?
+------------------
