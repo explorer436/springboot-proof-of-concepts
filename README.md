@@ -105,3 +105,7 @@ Learn how to do these in Haskell:
 - Go throught the list of features offered by spring framework and learn how to implement the solutions in Haskell
 - xml to json and json to xml
 ------------------
+
+How does Haskell handle garbage collection? Not just theoretically? How does it compare to other languages like C++ and Java in a production environment?
+
+------------------
