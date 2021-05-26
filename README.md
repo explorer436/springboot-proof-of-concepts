@@ -109,3 +109,11 @@ Learn how to do these in Haskell:
 How does Haskell handle garbage collection? Not just theoretically? How does it compare to other languages like C++ and Java in a production environment?
 
 ------------------
+
+Is nginx used with other languages?
+
+Can we write AWS lambdas in C or Lua or Rust?
+
+In Rust, do we have to create types for everything?
+
+------------------
