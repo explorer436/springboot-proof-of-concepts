@@ -117,3 +117,7 @@ Can we write AWS lambdas in C or Lua or Rust?
 In Rust, do we have to create types for everything?
 
 ------------------
+
+What are webpack alternatives for other languages? What is the need for it? How do other languages manage without it?
+
+------------------
