@@ -121,3 +121,7 @@ In Rust, do we have to create types for everything?
 What are webpack alternatives for other languages? What is the need for it? How do other languages manage without it?
 
 ------------------
+
+Swing UI applications - https://en.wikipedia.org/wiki/Swing_(Java)#:~:text=Swing%20is%20a%20GUI%20widget,Abstract%20Window%20Toolkit%20(AWT).
+
+------------------
