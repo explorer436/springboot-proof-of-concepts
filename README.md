@@ -2,8 +2,21 @@ TODO list:
 
 kafka - zookeeper
 
+https://spring.io/guides
+https://spring.io/guides#topical-guides
+
 https://spring.io/guides/gs/accessing-mongodb-data-rest/
+https://spring.io/guides/gs/accessing-neo4j-data-rest/
 https://spring.io/guides/gs/rest-hateoas/
+https://spring.io/guides/gs/cloud-circuit-breaker/
+https://web.archive.org/web/20210414191759/https://spring.io/guides/gs/spring-boot-kubernetes/
+https://spring.io/guides/gs/spring-cloud-stream/
+https://spring.io/guides/gs/gateway/
+https://spring.io/guides/gs/routing-and-filtering/
+https://spring.io/guides/gs/service-registration-and-discovery/
+https://spring.io/guides/gs/spring-boot-docker/
+https://spring.io/guides/gs/authenticating-ldap/
+
 
 Spring Cloud Contract Tests - what value do they provide to the producer application? Write a small POC for this.
 
