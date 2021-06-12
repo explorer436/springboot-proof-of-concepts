@@ -7,7 +7,6 @@ https://spring.io/guides#topical-guides
 
 https://spring.io/guides/gs/accessing-mongodb-data-rest/
 https://spring.io/guides/gs/accessing-neo4j-data-rest/
-https://spring.io/guides/gs/rest-hateoas/
 https://spring.io/guides/gs/cloud-circuit-breaker/
 https://web.archive.org/web/20210414191759/https://spring.io/guides/gs/spring-boot-kubernetes/
 https://spring.io/guides/gs/spring-cloud-stream/
@@ -153,3 +152,7 @@ What are webpack alternatives for other languages? What is the need for it? How 
 Swing UI applications - https://en.wikipedia.org/wiki/Swing_(Java)#:~:text=Swing%20is%20a%20GUI%20widget,Abstract%20Window%20Toolkit%20(AWT).
 
 ------------------
+
+Documentation for further reading:
+
+1. https://en.wikipedia.org/wiki/HATEOAS
