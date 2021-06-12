@@ -1,29 +1,28 @@
 TODO list:
 
-kafka - zookeeper
 
-https://spring.io/guides
-https://spring.io/guides#topical-guides
-
-https://spring.io/guides/gs/accessing-mongodb-data-rest/
-https://spring.io/guides/gs/accessing-neo4j-data-rest/
-https://spring.io/guides/gs/cloud-circuit-breaker/
-https://web.archive.org/web/20210414191759/https://spring.io/guides/gs/spring-boot-kubernetes/
-https://spring.io/guides/gs/spring-cloud-stream/
-https://spring.io/guides/gs/gateway/
-https://spring.io/guides/gs/routing-and-filtering/
-https://spring.io/guides/gs/service-registration-and-discovery/
-https://spring.io/guides/gs/spring-boot-docker/
-https://spring.io/guides/gs/authenticating-ldap/
-
+1. https://spring.io/guides
+1. https://spring.io/guides#topical-guides
+1. https://spring.io/guides/gs/accessing-mongodb-data-rest/
+1. https://spring.io/guides/gs/accessing-neo4j-data-rest/
+1. https://spring.io/guides/gs/cloud-circuit-breaker/
+1. https://web.archive.org/web/20210414191759/https://spring.io/guides/gs/spring-boot-kubernetes/
+1. https://spring.io/guides/gs/spring-cloud-stream/
+1. https://spring.io/guides/gs/gateway/
+1. https://spring.io/guides/gs/routing-and-filtering/
+1. https://spring.io/guides/gs/service-registration-and-discovery/
+1. https://spring.io/guides/gs/spring-boot-docker/
+1. https://spring.io/guides/gs/authenticating-ldap/
 
 Spring Cloud Contract Tests - what value do they provide to the producer application? Write a small POC for this.
 
 sending email from a springboot application
 
 single sign-on with spring security OAuth 2
+
 spring-security-oauth
 
+kafka - zookeeper
 springboot Apache Kafka messaging
 spring-cloud-stream
 spring-cloud-stream-binder-kafka
@@ -80,9 +79,6 @@ MapStruct and JMapper java bean mappings
 chef server and chef environment
 
 Do a POC using lua language
-
-mocha test framework
-
 
 ------------------
 
@@ -155,4 +151,10 @@ Swing UI applications - https://en.wikipedia.org/wiki/Swing_(Java)#:~:text=Swing
 
 Documentation for further reading:
 
-1. https://en.wikipedia.org/wiki/HATEOAS
+https://en.wikipedia.org/wiki/HATEOAS
+
+https://stateless.group/hal_specification.html - this is related to HATEOAS
+
+Spring Data REST takes the features of Spring HATEOAS and Spring Data MongoDB and automatically combines them together.
+
+Spring Data REST also supports Spring Data JPA, Spring Data Gemfire, and Spring Data Neo4j as backend data stores.

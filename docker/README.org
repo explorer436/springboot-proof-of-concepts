@@ -1,0 +1,96 @@
+Commands:
+
+*** Verify installation and set-up
+    
+To check if docker is installed in your computer, try to check for its version: `docker --version`
+
+To check if Docker Client is talking to Docker Daemon and that Docker Daemon is talking to Docker Hub successfully: `docker run hello-world`
+
+sudo systemctl status docker
+
+*** Images
+    
+A Docker image in DockerHub is a static template - a set of bytes.
+
+Image is like a class and container is like an object based on that class.
+
+To search for images in docker hub, either use the web interface or use this command: `sudo docker search mongodb`
+
+To list all the images that are pulled into the machine from DockerHub: `docker images`
+
+To pull mysql image from DockerHub into our machine: `docker pull mysql`
+
+To view the history of a Docker image: `docker image history imageId`
+To inspect the history of a Docker image: `docker image inspect imageId`
+To remove a Docker image from local machine: `docker image remove imageId`
+
+*** Containers
+
+Docker Container - a running version of the image. For the same image, we can have multiple containers running.
+
+**** Running containers
+
+```
+docker run -p 5000:5000 nameOfTheDockerRepository/nameOfTheApplication
+docker run -p {HostPort}:{ContainerPort} nameOfTheDockerRepository/nameOfTheApplication
+```
+ 
+(docker run is a shortcut for docker container run)
+
+To list the running containers: `docker container ls`
+To list the running and terminated containers: `docker container ls -a`
+
+**** Detatched mode
+     
+If we want the container to be running in the background, use the `-d` option.This way, the terminal is not tied to the lifecycle of the container. Detatched mode:`docker run -p 5000:5000 -d nameOfTheDockerRepository/nameOfTheApplication`
+
+**** Stopping containers
+
+To stop a container based on containerId : `docker container stop containerId`
+This will give the application that is running in the container some time to gracefully shut itself down. e.g. close connection pools, close executorService, etc.
+stop -> SIGTERM -> graceful shutdown
+
+**** Killing containers
+
+To kil a container based on containerId : `docker container kill containerId`
+Kill the container and the application that is running in it right away.
+kill -> SIGKILL  -> immediately terminate the process
+
+**** Pausing containers
+
+To pause a container: `docker container pause containerId`
+To unpause a container: `docker container unpause containerId`
+
+**** Inspect containers
+
+To inspect a container: `docker container inspect containerId`
+
+**** Removing containers
+
+To remove all the stopped containers: `docker container prune`
+When there is "not enough space" error from Docker, use this command to clean up the stopped and running containers: `docker system prune -a`
+
+**** Processes in a container
+
+To display the processes running in a container: `docker top containerId`
+
+**** Live stream
+
+To display a live stream of container(s) resource usage statistics: `docker stats`
+
+*** Bridge network
+    
+Every container that runs is a part of the bridge network in Docker - it is an internal Docker network. Nobody will be able to access it unless we specifically expose it on to the host system where the container is running.
+
+docker network
+docker network ls
+
+*** Logs
+    
+To look at logs for a container that is running: `docker logs containerId` (you don't have to type the entire id. A subset of the id will do)
+
+To follow the logs: `docker logs -f containerId`
+
+*** Events
+
+To view the events happening in docker: `docker events`
