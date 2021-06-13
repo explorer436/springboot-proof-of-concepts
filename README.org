@@ -13,6 +13,13 @@ TODO list:
 1. https://spring.io/guides/gs/spring-boot-docker/
 1. https://spring.io/guides/gs/authenticating-ldap/
 
+Tsoding JSON parser
+
+Haskell - Numeric types chapter
+Learn you a Haskell for greater good - rest of the chapters
+
+Seeing so many references on the internet for springboot and elastic stack. Can we do a POC about it?
+
 Spring Cloud Contract Tests - what value do they provide to the producer application? Write a small POC for this.
 
 sending email from a springboot application
