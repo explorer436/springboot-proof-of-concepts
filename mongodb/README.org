@@ -1,2 +1,5 @@
 https://www.bmc.com/blogs/mongodb-docker-container/
 
+Take a look at the following as well :
+
+proof-of-concepts/spring-data-mongodb-rest/

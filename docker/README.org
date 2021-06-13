@@ -94,3 +94,9 @@ To follow the logs: `docker logs -f containerId`
 *** Events
 
 To view the events happening in docker: `docker events`
+
+*** Other references:
+
+Take a look at the docker-compose files in the following repository for details about setting up multiple containers in the same network:
+
+proof-of-concepts/spring-data-mongodb-rest/

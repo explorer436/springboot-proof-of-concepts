@@ -1,0 +1,585 @@
+Prerequisites:
+
+Set up mongodb in a docker container as explained below:
+
+*** Setting up Mongodb:
+
+I tried setting up a database and a user for it using docker-compose-with-mongo-and-mongo-express.yml. But that approach did not work. Something seems to be going wrong while setting up users for the newly created database in mongodb.
+
+So, I quit following that pattern and instead, I set up mongodb using the file "docker-compose-with-mongodb".
+
+To set-up containers using this docker-compose file, use the command: `docker-compose -f docker-compose-with-mongo.yml up -d`
+
+------------------------------
+
+PersonRepository is an interface and lets you perform various operations that involve Person objects. It gets these operations by extending MongoRepository, which in turn extends the PagingAndSortingRepository interface defined in Spring Data Commons.
+
+At runtime, Spring Data REST automatically creates an implementation of this interface. Then it uses the @RepositoryRestResource annotation to direct Spring MVC to create RESTful endpoints at /people.
+
+In PersonRepository, @RepositoryRestResource is not required for a repository to be exported. It is used only to change the export details, such as using /people instead of the default value of /persons.
+
+In PersonRepository, you have also defined a custom query to retrieve a list of Person objects based on the lastName value.
+
+-------------
+
+Use this command to start the application in local computer: `./mvnw clean && ./mvnw spring-boot:run`
+
+For testing, use the following commands:
+
+First you want to see the top level service, as the following example shows:
+
+#+begin_src 
+$ curl http://localhost:8080
+{
+  "_links" : {
+    "people" : {
+      "href" : "http://localhost:8080/people{?page,size,sort}",
+      "templated" : true
+    }
+  }
+}
+#+end_src
+
+
+The preceding example provides a first glimpse of what this server has to offer. There is a people link located at http://localhost:8080/people. It has some options, such as ?page, ?size, and ?sort.
+
+Spring Data REST uses the HAL format for JSON output. It is flexible and offers a convenient way to supply links adjacent to the data that is served.
+
+When you use the people link, you see the Person records in the database (none at present):
+
+#+begin_src 
+$ curl http://localhost:8080/people
+{
+  "_embedded" : {
+    "people" : [ ]
+  },
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:8080/people"
+    },
+    "profile" : {
+      "href" : "http://localhost:8080/profile/people"
+    },
+    "search" : {
+      "href" : "http://localhost:8080/people/search"
+    }
+  },
+  "page" : {
+    "size" : 20,
+    "totalElements" : 0,
+    "totalPages" : 0,
+    "number" : 0
+  }
+#+end_src
+
+
+There are currently no elements and, hence, no pages. It is time to create a new Person!
+
+The following command creates a person named “Frodo Baggins”: 
+ -i: Ensures you can see the response message including the headers. The URI of the newly created Person is shown. 
+
+#+begin_src 
+$ curl -i -X POST -H "Content-Type:application/json" -d "{  \"firstName\" : \"Frodo\",  \"lastName\" : \"Baggins\" }" http://localhost:8080/people
+HTTP/1.1 201 
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Location: http://localhost:8080/people/60c60b6feed6c357f2321e63
+Content-Type: application/hal+json
+Transfer-Encoding: chunked
+Date: Sun, 13 Jun 2021 13:43:12 GMT
+
+{
+  "firstName" : "Frodo",
+  "lastName" : "Baggins",
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:8080/people/60c60b6feed6c357f2321e63"
+    },
+    "person" : {
+      "href" : "http://localhost:8080/people/60c60b6feed6c357f2321e63"
+    }
+  }
+#+end_src
+
+
+ Notice how the previous POST operation includes a Location header. This contains the URI of the newly created resource. Spring Data REST also has two methods (RepositoryRestConfiguration.setReturnBodyOnCreate(…) and setReturnBodyOnUpdate(…)) that you can use to configure the framework to immediately return the representation of the resource just created/updated. 
+
+From this you can query for all people, as the following example shows: 
+
+#+begin_src 
+$ curl http://localhost:8080/people
+{
+  "_embedded" : {
+    "people" : [ {
+      "firstName" : "Frodo",
+      "lastName" : "Baggins",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/people/60c60b6feed6c357f2321e63"
+        },
+        "person" : {
+          "href" : "http://localhost:8080/people/60c60b6feed6c357f2321e63"
+        }
+      }
+    } ]
+  },
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:8080/people"
+    },
+    "profile" : {
+      "href" : "http://localhost:8080/profile/people"
+    },
+    "search" : {
+      "href" : "http://localhost:8080/people/search"
+    }
+  },
+  "page" : {
+    "size" : 20,
+    "totalElements" : 1,
+    "totalPages" : 1,
+    "number" : 0
+  }
+#+end_src
+
+
+The persons object contains a list with Frodo. Notice how it includes a self link. Spring Data REST also uses the Evo Inflector to pluralize the names of entities for groupings. 
+
+You can directly query for the individual record, as the following example shows: 
+
+#+begin_src 
+curl http://localhost:8080/people/60c60b6feed6c357f2321e63
+{
+  "firstName" : "Frodo",
+  "lastName" : "Baggins",
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:8080/people/60c60b6feed6c357f2321e63"
+    },
+    "person" : {
+      "href" : "http://localhost:8080/people/60c60b6feed6c357f2321e63"
+    }
+  }
+#+end_src
+
+
+ This might appear to be purely web-based, but, behind the scenes, it is talking to the MongoDB database you started. 
+
+In this guide, there is only one domain object. With a more complex system, where domain objects are related to each other, Spring Data REST renders additional links to help navigate to connected records.
+
+Find all the custom queries, as the following example shows:
+
+#+begin_src 
+curl http://localhost:8080/people/search
+{
+  "_links" : {
+    "findByLastName" : {
+      "href" : "http://localhost:8080/people/search/findByLastName{?name}",
+      "templated" : true
+    },
+    "self" : {
+      "href" : "http://localhost:8080/people/search"
+    }
+  }
+#+end_src
+
+
+You can see the URL for the query, including the HTTP query parameter, name. This matches the @Param("name") annotation embedded in the interface.
+
+To use the findByLastName query, run the following command: 
+
+#+begin_src 
+curl http://localhost:8080/people/search/findByLastName?name=Bagginss
+{
+  "_embedded" : {
+    "people" : [ {
+      "firstName" : "Frodo",
+      "lastName" : "Baggins",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/people/60c60b6feed6c357f2321e63"
+        },
+        "person" : {
+          "href" : "http://localhost:8080/people/60c60b6feed6c357f2321e63"
+        }
+      }
+    } ]
+  },
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:8080/people/search/findByLastName?name=Baggins"
+    }
+  }
+#+end_src
+
+
+Because you defined it to return List<Person> in the code, it returns all of the results. If you had defined it to return only Person, it picks one of the Person objects to return. Since this can be unpredictable, you probably do not want to do that for queries that can return multiple entries.
+
+You can also issue PUT, PATCH, and DELETE REST calls to replace, update, or delete existing records, respectively. The following example uses a PUT call: 
+
+#+begin_src 
+$ curl -X PUT -H "Content-Type:application/json" -d "{ \"firstName\": \"Bilbo\", \"lastName\": \"Baggins\" }" http://localhost:8080/people60c60b6feed6c357f2321e63
+{
+  "firstName" : "Bilbo",
+  "lastName" : "Baggins",
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:8080/people/60c60b6feed6c357f2321e63"
+    },
+    "person" : {
+      "href" : "http://localhost:8080/people/60c60b6feed6c357f2321e63"
+    }
+  }
+#+end_src
+
+The following example uses a PATCH call: 
+
+#+begin_src 
+$ curl -X PAThttp://localhost:80curl -X PATCH -H "Content-Type:application/json" -d "{ \"firstName\": \"Bilbo Jr.\" }" http://localhost:8080/people/60c60b6feed6c357f2321e63
+{
+  "firstName" : "Bilbo Jr.",
+  "lastName" : "Baggins",
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:8080/people/60c60b6feed6c357f2321e63"
+    },
+    "person" : {
+      "href" : "http://localhost:8080/people/60c60b6feed6c357f2321e63"
+    }
+  } 
+#+end_src
+
+
+PUT replaces an entire record. Fields not supplied will be replaced with null. You can use PATCH to update a subset of items. 
+
+You can also delete records, if you want:
+
+#+begin_src 
+curl -X DELETE http://localhost:8080/people/60c60b6feed6c357f2321e63
+#+end_src
+
+A convenient aspect of this hypermedia-driven interface is how you can discover all the RESTful endpoints by using curl (or whatever REST client you like). There is no need to exchange a formal contract or interface document with your customers.
+
+
+
+References:
+
+https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.nosql
+
+If you run this guide multiple times, there may be leftover data. Refer to the MongoDB shell quick reference for commands to find and drop your database if you need a fresh start.
+
+In order to see how pagination works, insert the following records into the database using curl commands so that we can retrieve them later.
+
+#+begin_src 
+curl -i -X POST -H "Content-Type:application/json" -d "{  \"firstName\" : \"Liam\",  \"lastName\" : \"Baggins\" }" http://localhost:8080/people 
+curl -i -X POST -H "Content-Type:application/json" -d "{  \"firstName\" : \"Noah\",  \"lastName\" : \"Baggins\" }" http://localhost:8080/people 
+curl -i -X POST -H "Content-Type:application/json" -d "{  \"firstName\" : \"Oliver\",  \"lastName\" : \"Baggins\" }" http://localhost:8080/people 
+curl -i -X POST -H "Content-Type:application/json" -d "{  \"firstName\" : \"William\",  \"lastName\" : \"Baggins\" }" http://localhost:8080/people 
+curl -i -X POST -H "Content-Type:application/json" -d "{  \"firstName\" : \"Elijah\",  \"lastName\" : \"Baggins\" }" http://localhost:8080/people 
+curl -i -X POST -H "Content-Type:application/json" -d "{  \"firstName\" : \"James\",  \"lastName\" : \"Baggins\" }" http://localhost:8080/people 
+curl -i -X POST -H "Content-Type:application/json" -d "{  \"firstName\" : \"Benjamin\",  \"lastName\" : \"Baggins\" }" http://localhost:8080/people 
+curl -i -X POST -H "Content-Type:application/json" -d "{  \"firstName\" : \"Lucas\",  \"lastName\" : \"Baggins\" }" http://localhost:8080/people 
+curl -i -X POST -H "Content-Type:application/json" -d "{  \"firstName\" : \"Mason\",  \"lastName\" : \"Baggins\" }" http://localhost:8080/people 
+curl -i -X POST -H "Content-Type:application/json" -d "{  \"firstName\" : \"Ethan\",  \"lastName\" : \"Baggins\" }" http://localhost:8080/people 
+curl -i -X POST -H "Content-Type:application/json" -d "{  \"firstName\" : \"Alexander\",  \"lastName\" : \"Baggins\" }" http://localhost:8080/people 
+curl -i -X POST -H "Content-Type:application/json" -d "{  \"firstName\" : \"Henry\",  \"lastName\" : \"Baggins\" }" http://localhost:8080/people 
+curl -i -X POST -H "Content-Type:application/json" -d "{  \"firstName\" : \"Jacob\",  \"lastName\" : \"Baggins\" }" http://localhost:8080/people 
+curl -i -X POST -H "Content-Type:application/json" -d "{  \"firstName\" : \"Michael\",  \"lastName\" : \"Baggins\" }" http://localhost:8080/people 
+curl -i -X POST -H "Content-Type:application/json" -d "{  \"firstName\" : \"Daniel\",  \"lastName\" : \"Baggins\" }" http://localhost:8080/people 
+curl -i -X POST -H "Content-Type:application/json" -d "{  \"firstName\" : \"Logan\",  \"lastName\" : \"Baggins\" }" http://localhost:8080/people 
+curl -i -X POST -H "Content-Type:application/json" -d "{  \"firstName\" : \"Jackson\",  \"lastName\" : \"Baggins\" }" http://localhost:8080/people 
+curl -i -X POST -H "Content-Type:application/json" -d "{  \"firstName\" : \"Sebastian\",  \"lastName\" : \"Baggins\" }" http://localhost:8080/people 
+curl -i -X POST -H "Content-Type:application/json" -d "{  \"firstName\" : \"Jack\",  \"lastName\" : \"Baggins\" }" http://localhost:8080/people 
+curl -i -X POST -H "Content-Type:application/json" -d "{  \"firstName\" : \"Aiden\",  \"lastName\" : \"Baggins\" }" http://localhost:8080/people 
+curl -i -X POST -H "Content-Type:application/json" -d "{  \"firstName\" : \"Owen\",  \"lastName\" : \"Baggins\" }" http://localhost:8080/people 
+curl -i -X POST -H "Content-Type:application/json" -d "{  \"firstName\" : \"Samuel\",  \"lastName\" : \"Baggins\" }" http://localhost:8080/people 
+curl -i -X POST -H "Content-Type:application/json" -d "{  \"firstName\" : \"Matthew\",  \"lastName\" : \"Baggins\" }" http://localhost:8080/people 
+curl -i -X POST -H "Content-Type:application/json" -d "{  \"firstName\" : \"Joseph\",  \"lastName\" : \"Baggins\" }" http://localhost:8080/people 
+curl -i -X POST -H "Content-Type:application/json" -d "{  \"firstName\" : \"Levi\",  \"lastName\" : \"Baggins\" }" http://localhost:8080/people 
+curl -i -X POST -H "Content-Type:application/json" -d "{  \"firstName\" : \"Mateo\",  \"lastName\" : \"Baggins\" }" http://localhost:8080/people 
+curl -i -X POST -H "Content-Type:application/json" -d "{  \"firstName\" : \"David\",  \"lastName\" : \"Baggins\" }" http://localhost:8080/people 
+curl -i -X POST -H "Content-Type:application/json" -d "{  \"firstName\" : \"John\",  \"lastName\" : \"Baggins\" }" http://localhost:8080/people 
+curl -i -X POST -H "Content-Type:application/json" -d "{  \"firstName\" : \"Wyatt\",  \"lastName\" : \"Baggins\" }" http://localhost:8080/people 
+curl -i -X POST -H "Content-Type:application/json" -d "{  \"firstName\" : \"Carter\",  \"lastName\" : \"Baggins\" }" http://localhost:8080/people 
+#+end_src
+
+
+#+begin_src 
+$ curl http://localhost:8080/people
+{
+  "_embedded" : {
+    "people" : [ {
+      "firstName" : "Bilbo Jr.",
+      "lastName" : "Baggins",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/people/60c60b6feed6c357f2321e63"
+        },
+        "person" : {
+          "href" : "http://localhost:8080/people/60c60b6feed6c357f2321e63"
+        }
+      }
+    }, {
+      "firstName" : "Liam",
+      "lastName" : "Baggins",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/people/60c618d1eed6c357f2321e64"
+        },
+        "person" : {
+          "href" : "http://localhost:8080/people/60c618d1eed6c357f2321e64"
+        }
+      }
+    }, {
+      "firstName" : "Noah",
+      "lastName" : "Baggins",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e65"
+        },
+        "person" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e65"
+        }
+      }
+    }, {
+      "firstName" : "Oliver",
+      "lastName" : "Baggins",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e66"
+        },
+        "person" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e66"
+        }
+      }
+    }, {
+      "firstName" : "William",
+      "lastName" : "Baggins",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e67"
+        },
+        "person" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e67"
+        }
+      }
+    }, {
+      "firstName" : "Elijah",
+      "lastName" : "Baggins",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e68"
+        },
+        "person" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e68"
+        }
+      }
+    }, {
+      "firstName" : "James",
+      "lastName" : "Baggins",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e69"
+        },
+        "person" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e69"
+        }
+      }
+    }, {
+      "firstName" : "Benjamin",
+      "lastName" : "Baggins",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e6a"
+        },
+        "person" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e6a"
+        }
+      }
+    }, {
+      "firstName" : "Lucas",
+      "lastName" : "Baggins",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e6b"
+        },
+        "person" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e6b"
+        }
+      }
+    }, {
+      "firstName" : "Mason",
+      "lastName" : "Baggins",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e6c"
+        },
+        "person" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e6c"
+        }
+      }
+    }, {
+      "firstName" : "Ethan",
+      "lastName" : "Baggins",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e6d"
+        },
+        "person" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e6d"
+        }
+      }
+    }, {
+      "firstName" : "Alexander",
+      "lastName" : "Baggins",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e6e"
+        },
+        "person" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e6e"
+        }
+      }
+    }, {
+      "firstName" : "Henry",
+      "lastName" : "Baggins",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e6f"
+        },
+        "person" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e6f"
+        }
+      }
+    }, {
+      "firstName" : "Jacob",
+      "lastName" : "Baggins",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e70"
+        },
+        "person" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e70"
+        }
+      }
+    }, {
+      "firstName" : "Michael",
+      "lastName" : "Baggins",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e71"
+        },
+        "person" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e71"
+        }
+      }
+    }, {
+      "firstName" : "Daniel",
+      "lastName" : "Baggins",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e72"
+        },
+        "person" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e72"
+        }
+      }
+    }, {
+      "firstName" : "Logan",
+      "lastName" : "Baggins",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e73"
+        },
+        "person" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e73"
+        }
+      }
+    }, {
+      "firstName" : "Jackson",
+      "lastName" : "Baggins",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e74"
+        },
+        "person" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e74"
+        }
+      }
+    }, {
+      "firstName" : "Sebastian",
+      "lastName" : "Baggins",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e75"
+        },
+        "person" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e75"
+        }
+      }
+    }, {
+      "firstName" : "Jack",
+      "lastName" : "Baggins",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e76"
+        },
+        "person" : {
+          "href" : "http://localhost:8080/people/60c618d2eed6c357f2321e76"
+        }
+      }
+    } ]
+  },
+  "_links" : {
+    "first" : {
+      "href" : "http://localhost:8080/people?page=0&size=20"
+    },
+    "self" : {
+      "href" : "http://localhost:8080/people"
+    },
+    "next" : {
+      "href" : "http://localhost:8080/people?page=1&size=20"
+    },
+    "last" : {
+      "href" : "http://localhost:8080/people?page=1&size=20"
+    },
+    "profile" : {
+      "href" : "http://localhost:8080/profile/people"
+    },
+    "search" : {
+      "href" : "http://localhost:8080/people/search"
+    }
+  },
+  "page" : {
+    "size" : 20,
+    "totalElements" : 31,
+    "totalPages" : 2,
+    "number" : 0
+  }
+#+end_src
+
+------------------------------
+
+
+Trouble-shooting:
+
+Attempt to switch database target during SASL authentication
+
+The issue is that the database user is being created on the admin database instead of dbname.
+
+Omitting the /dbname from the connection string / mongo shell / etc. means the connection string will authenticate to the admin database. Quoting the docs:
+
+If '/database' is not specified and the connection string includes credentials, the driver will authenticate to the admin database
+
+(https://docs.mongodb.com/manual/reference/connection-string/#components).
+
+If /dbname is defined, then the connection string will authenticate against dbname unless the authSource parameter is configured to specify the database in which the user resides.
+
+You can confirm that this is the case by either adding authSource=admin to the connection string or --authenticationDatabase admin to the mongo shell command.
+
+Alternatively, you can use db.getUsers() to see the database in which a user was created.
+
+https://stackoverflow.com/a/57436441
+
+------------------------------
