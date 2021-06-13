@@ -3,8 +3,6 @@ TODO list:
 
 1. https://spring.io/guides
 1. https://spring.io/guides#topical-guides
-1. https://spring.io/guides/gs/accessing-mongodb-data-rest/
-1. https://spring.io/guides/gs/accessing-neo4j-data-rest/
 1. https://spring.io/guides/gs/cloud-circuit-breaker/
 1. https://web.archive.org/web/20210414191759/https://spring.io/guides/gs/spring-boot-kubernetes/
 1. https://spring.io/guides/gs/spring-cloud-stream/
