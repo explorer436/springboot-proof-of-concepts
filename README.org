@@ -13,6 +13,8 @@ TODO list:
 1. https://spring.io/guides/gs/spring-boot-docker/
 1. https://spring.io/guides/gs/authenticating-ldap/
 
+   POC for scraping images from a website.
+   
 Tsoding JSON parser
 
 Haskell - Numeric types chapter
