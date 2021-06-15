@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.hateoas</groupId>
-	<artifactId>Spring-HATEOAS-REST-service</artifactId>
+	<artifactId>spring-hateoas-rest-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Spring-HATEOAS-REST-service</name>
-	<description>Demo project for Spring-HATEOAS-REST-service</description>
+	<name>spring-hateoas-rest-service</name>
+	<description>Demo project for spring-hateoas-rest-service</description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
