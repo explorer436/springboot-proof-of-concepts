@@ -165,3 +165,13 @@ https://stateless.group/hal_specification.html - this is related to HATEOAS
 Spring Data REST takes the features of Spring HATEOAS and Spring Data MongoDB and automatically combines them together.
 
 Spring Data REST also supports Spring Data JPA, Spring Data Gemfire, and Spring Data Neo4j as backend data stores.
+
+------------------
+
+read later:
+
+https://walkercoderanger.com/blog/2014/02/javascript-minefield/
+
+https://medium.com/javascript-non-grata/the-case-against-javascript-75854c07bfba
+
+------------------
