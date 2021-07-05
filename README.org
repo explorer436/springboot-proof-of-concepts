@@ -4,8 +4,8 @@ TODO list:
 1. https://spring.io/reactive
 1. https://spring.io/guides
 1. https://spring.io/guides#topical-guides
-1. https://spring.io/guides/gs/cloud-circuit-breaker/
 1. https://web.archive.org/web/20210414191759/https://spring.io/guides/gs/spring-boot-kubernetes/
+1. https://spring.io/guides/gs/spring-boot-kubernetes/
 1. https://spring.io/guides/gs/spring-cloud-stream/
 1. https://spring.io/guides/gs/gateway/
 1. https://spring.io/guides/gs/routing-and-filtering/
@@ -13,8 +13,6 @@ TODO list:
 1. https://spring.io/guides/gs/spring-boot-docker/
 1. https://spring.io/guides/gs/authenticating-ldap/
 
-   POC for scraping images from a website.
-   
    springboot graphql POC
    
 Tsoding JSON parser
@@ -37,6 +35,10 @@ kafka - zookeeper
 springboot Apache Kafka messaging
 spring-cloud-stream
 spring-cloud-stream-binder-kafka
+https://spring.io/guides/gs/spring-cloud-stream/
+  1. https://dataflow.spring.io/docs/stream-developer-guides/streams/standalone-stream-rabbitmq/
+  2. https://dataflow.spring.io/docs/stream-developer-guides/streams/standalone-stream-kafka/ 
+https://www.baeldung.com/spring-kafka
 
 spring-session
 
